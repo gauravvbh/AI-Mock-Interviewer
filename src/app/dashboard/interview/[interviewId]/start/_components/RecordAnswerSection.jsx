@@ -21,6 +21,7 @@ const RecordAnswerSection = ({ mockInterviewQuestions, activeQuestionIndex, inte
         interimResult,
         isRecording,
         results,
+        setResults,
         startSpeechToText,
         stopSpeechToText,
     } = useSpeechToText({
@@ -29,25 +30,22 @@ const RecordAnswerSection = ({ mockInterviewQuestions, activeQuestionIndex, inte
     });
 
     useEffect(() => {
-        setUserAnswer(prevAns => prevAns + results.map(result => result.transcript));
-    }, [results])
+        if (results.length > 0) {
+            setUserAnswer(prevAns => prevAns + " " + results.map(result => result.transcript).join(" "));
+        }
+    }, [results]);
+
 
 
     useEffect(() => {
         if (!isRecording && userAnswer.length > 10) {
             saveToDB();
         }
-    }, [userAnswer])
+    }, [isRecording])
 
     const startStopRecording = () => {
         if (isRecording) {
-            setLoading(true);
             stopSpeechToText();
-            if (userAnswer.length < 10) {
-                setLoading(false);
-                toast.error('Error while saving your answer, Please try again later');
-                return;
-            }
         }
         else {
             startSpeechToText()
@@ -55,15 +53,16 @@ const RecordAnswerSection = ({ mockInterviewQuestions, activeQuestionIndex, inte
     }
 
     const saveToDB = async () => {
-        setLoading(true);
-        const feedbackPrompt = "Question:" + mockInterviewQuestions[activeQuestionIndex]?.question + ", User Answer: " + userAnswer + ", Depends on Question and User Answer for given interview question please give us rating for answer and feedback as area of improvement if any in just 3 to 5 lines to improve it in JSON format with rating field and feedback field";
+        try {
+            setLoading(true);
+            const feedbackPrompt = "Interview Question: " + mockInterviewQuestions[activeQuestionIndex]?.question +
+                ", User Answer: " + userAnswer + ", depends on answer for the given interview question, please provide rating for answer and feedback as area of improvement if any in just 3 to 5 lines to improve it in JSON format with rating field and feedback field";
 
-        const result = await chatSession.sendMessage(feedbackPrompt);
-        const mockJSONResponse = (result.response.text()).replace('```json', '').replace('```', '');
-        const jsonFeedbackResp = JSON.parse(mockJSONResponse);
+            const result = await chatSession.sendMessage(feedbackPrompt);
+            const mockJSONResponse = result.response.text().replace('```json', '').replace('```', '');
+            const jsonFeedbackResp = JSON.parse(mockJSONResponse);
 
-        const resp = db.insert(UserAnswer)
-            .values({
+            const resp = await db.insert(UserAnswer).values({
                 mockIdRef: interviewData?.mockId,
                 question: mockInterviewQuestions[activeQuestionIndex]?.question,
                 correctAns: mockInterviewQuestions[activeQuestionIndex]?.answer,
@@ -74,14 +73,22 @@ const RecordAnswerSection = ({ mockInterviewQuestions, activeQuestionIndex, inte
                 createdAt: moment().format('DD-MM-YYYY'),
             })
 
-
-        if (resp) {
-            toast.success('Answer saved successfully');
-            setUserAnswer('');
-            stopSpeechToText();
+            if (resp) {
+                toast.success('Answer saved successfully');
+                console.log("resp");
+                console.log(resp);
+                setUserAnswer('');
+                stopSpeechToText();
+                setResults([]);
+            }
+        } catch (error) {
+            console.error("Error saving answer:", error);
+            toast.error("Failed to save answer.");
+        } finally {
+            setLoading(false);
         }
-        setLoading(false);
-    }
+    };
+
 
     return (
         <div className='flex items-center justify-center flex-col'>

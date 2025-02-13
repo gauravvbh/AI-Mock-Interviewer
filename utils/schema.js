@@ -1,5 +1,15 @@
 import { pgTable, serial, text, varchar } from "drizzle-orm/pg-core";
 
+export const User = pgTable(
+    "user",
+    {
+        //columns
+        id: serial('id').primaryKey(),
+        email: varchar('email').unique().notNull(),
+        plan: varchar('plan').default('Free').notNull(),
+        createdAt: varchar('createdAt'),
+    }
+);
 export const MockInterview = pgTable(
     "mockInterview",
     {
@@ -20,7 +30,7 @@ export const UserAnswer = pgTable(
     {
         //columns 
         id: serial('id').primaryKey(),
-        mockIdRef: varchar('mockId').notNull(),
+        mockIdRef: varchar('mockIdRef').notNull(),
         question: varchar('question').notNull(),
         correctAns: varchar('correctAns'),
         userAnswer: varchar('userAnswer'),

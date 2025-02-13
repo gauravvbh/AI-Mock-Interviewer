@@ -8,6 +8,7 @@ import QuestionsSection from './_components/QuestionsSection';
 import { eq } from 'drizzle-orm';
 import RecordAnswerSection from './_components/RecordAnswerSection';
 import { Button } from '@mui/material';
+import Link from 'next/link';
 
 function StartInterview() {
     const [interviewData, setInterviewData] = useState();
@@ -17,7 +18,7 @@ function StartInterview() {
 
     useEffect(() => {
         getInterviewDetails()
-    }, [params.interviewId])
+    }, [])
 
     const getInterviewDetails = async () => {
         const result = await db.select().from(MockInterview).where(eq(MockInterview.mockId, params.interviewId));
@@ -42,7 +43,9 @@ function StartInterview() {
                     <Button onClick={() => setActiveQuestionIndex(activeQuestionIndex + 1)}>Next Question</Button>
                 }
                 {activeQuestionIndex == mockInterviewQuestions?.length - 1 &&
-                    <Button>End Interview</Button>
+                    <Link href={`/dashboard/interview/${interviewData?.mockId}/feedback`}>
+                        <Button>End Interview</Button>
+                    </Link>
                 }
             </div>
         </div>
