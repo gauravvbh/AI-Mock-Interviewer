@@ -2,7 +2,6 @@
 
 import { useUser } from "@clerk/nextjs";
 import { eq } from "drizzle-orm";
-import Image from "next/image";
 import { useEffect } from "react";
 import { db } from "utils/db";
 import { User } from "utils/schema";

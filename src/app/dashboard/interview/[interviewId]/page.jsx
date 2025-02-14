@@ -5,11 +5,14 @@ import { eq } from 'drizzle-orm'
 import { Lightbulb, WebcamIcon } from 'lucide-react'
 import { useParams, useRouter } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
-import Webcam from 'react-webcam'
+import dynamic from 'next/dynamic'  // Import dynamic from Next.js
+
+const Webcam = dynamic(() => import('react-webcam'), { ssr: false }) // Disable SSR
+
 import { db } from 'utils/db'
 import { MockInterview } from 'utils/schema'
 
-const page = () => {
+const Page = () => {
   const [interviewData, setInterviewData] = useState();
   const [webcamEnabled, setWebcamEnabled] = useState(false);
   const params = useParams();
@@ -24,7 +27,6 @@ const page = () => {
     setInterviewData(result[0]);
     console.log(result[0])
   }
-
 
   return (
     <div className='my-10 flex justify-center flex-col'>
@@ -64,11 +66,9 @@ const page = () => {
 
       <div className=' flex justify-end items-end w-full'>
         <Button onClick={() => router.push(`/dashboard/interview/${params.interviewId}/start`)}>Start Interview</Button>
+      </div>
     </div>
-
-    </div >
-
   )
 }
 
-export default page
+export default Page

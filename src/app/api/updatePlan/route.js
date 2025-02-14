@@ -5,10 +5,8 @@ import { db } from 'utils/db';
 import { User } from 'utils/schema';
 
 export async function PUT(req) {
-    console.log("hello world!");
     try {
         const { order_id, payment_id, plan, email } = await req.json();
-        console.log(order_id, payment_id, plan, email);
 
         const isPaymentValid = await verifyPayment(order_id, payment_id);
 
@@ -38,7 +36,6 @@ const verifyPayment = async (order_id, payment_id) => {
         });
 
         const payment = await razorpay.payments.fetch(payment_id);
-        console.log("Payment Verification Response:", payment); // Log payment response
         return payment.status === "captured";
     } catch (error) {
         console.error("Payment verification failed:", error);
