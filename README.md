@@ -1,6 +1,6 @@
 # 🏆 Mock Interview AI - Ace Your Software Interviews
 
-![Mock Interview AI](assets/mock-interview-banner.png)
+![Mock Interview AI](public/mock-interview-banner.png)
 
 🚀 **Mock Interview AI** is an advanced AI-driven platform designed to **help candidates prepare for real-world software interviews** through interactive, voice-based mock interviews. Get real-time feedback, master technical and behavioral questions, and boost your confidence to land your dream job.
 
