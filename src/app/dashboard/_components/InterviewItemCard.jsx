@@ -12,7 +12,7 @@ const InterviewItemCard = ({ interview }) => {
                 {interview?.jobExperience} Years of Experience
             </h2>
             <h2 className="text-xs text-gray-400">
-                Created At: {new Date(interview?.createdAt).toLocaleDateString()}
+                Created At: {interview?.createdAt}
             </h2>
 
             <div className="flex justify-between mt-4 gap-3">
