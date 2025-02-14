@@ -34,16 +34,16 @@ The app will be available at [Live Link](https://ai-mock-interviewer-eta.vercel.
 ## 📸 Screenshots
 
 🔹 **Home Page**  
-![Home Page](assets/home-page.png)
+![Home Page](public/home-page.png)
 
 🔹 **Interview Page**  
-![Interview Page](assets/interview-page.png)
+![Interview Page](public/interview-page.png)
 
 🔹 **Subscription Plans**  
-![Plans](assets/plans.png)
+![Plans](public/plans.png)
 
 🔹 **Live AI Interview**  
-![Live Interview](assets/live-interview.png)
+![Live Interview](public/live-interview.png)
 
 ---
 
