@@ -2,22 +2,22 @@
 
 import { useUser } from "@clerk/nextjs";
 import { eq } from "drizzle-orm";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { db } from "utils/db";
 import { User } from "utils/schema";
+import { Button } from '@mui/material';
 
 export default function Home() {
   const { user } = useUser();
+
   useEffect(() => {
     if (user) {
       setUserData();
     }
-  }, [user])
+  }, [user]);
 
   const setUserData = async () => {
     try {
-
-      // Check if user already exists
       const existingUser = await db.select().from(User).where(eq(User.email, user.primaryEmailAddress.emailAddress));
 
       if (existingUser.length > 0) {
@@ -37,44 +37,78 @@ export default function Home() {
     }
   };
 
+  // Typewriter effect logic
+  const phrases = ["Software Interviews.", "Your Dream Job.", "Any Industry, Any Level."];
+  const [text, setText] = useState("");
+  const [index, setIndex] = useState(0);
+  const [isDeleting, setIsDeleting] = useState(false);
+  const [charIndex, setCharIndex] = useState(0);
+
+  useEffect(() => {
+    const currentText = phrases[index];
+
+    if (isDeleting) {
+      if (charIndex > 0) {
+        setTimeout(() => setCharIndex(charIndex - 1), 50);
+      } else {
+        setIsDeleting(false);
+        setIndex((prev) => (prev + 1) % phrases.length);
+      }
+    } else {
+      if (charIndex < currentText.length) {
+        setTimeout(() => setCharIndex(charIndex + 1), 100);
+      } else {
+        setTimeout(() => setIsDeleting(true), 1000);
+      }
+    }
+
+    setText(currentText.substring(0, charIndex));
+  }, [charIndex, index, isDeleting]);
 
   return (
-    <section className="">
-      <div className="mx-auto max-w-screen-xl px-4 py-32 lg:flex lg:h-screen lg:items-center">
-        <div className="mx-auto max-w-xl text-center">
-          <h1 className="text-3xl text-primary font-extrabold sm:text-5xl">
-            Ace your
-            <strong className="font-extrabold text-gray-400 sm:block"> Software interviews. </strong>
+    <section className="bg-gray-100">
+      <div className="mx-auto max-w-screen-xl px-6 py-32 lg:flex lg:h-screen lg:items-center">
+        <div className="mx-auto max-w-2xl text-center">
+          <h1 className="text-4xl font-extrabold text-gray-900 sm:text-6xl">
+            Ace Your
+            <strong className="block font-extrabold text-gray-700">
+              <span className="lg:whitespace-nowrap">{text}</span>
+              <span className="animate-blink">|</span>
+            </strong>
           </h1>
 
-          <p className="mt-10 sm:text-xl/relaxed">
+          <p className="mt-6 text-lg text-gray-700 sm:text-xl">
             Prepare for your interviews with real-time voice-to-voice mock interviews with the world's most advanced AI. Say goodbye to interview performance anxiety. Master any role, any level, any industry and land your Dream job. Get detailed feedback on your answers and suggestions to improve them.
           </p>
 
-          <div className="mt-8 flex flex-wrap justify-center gap-4">
-            <a
-              className="group relative inline-block text-sm font-medium text-white focus:ring-3 focus:outline-hidden"
+          {/* CTA Buttons */}
+          <div className="mt-8 flex flex-wrap justify-center gap-6">
+            <Button
               href="/dashboard"
+              variant="contained"
+              sx={{
+                backgroundColor: "#222",
+                color: "white",
+                "&:hover": { backgroundColor: "#444" }
+              }}
             >
-              <span className="absolute inset-0 border border-gray-600"></span>
-              <span
-                className="block border border-gray-600 bg-gray-500 px-12 py-3 transition-transform group-hover:-translate-x-1 group-hover:-translate-y-1"
-              >
-                Get Started
-              </span>
-            </a>
+              Get Started
+            </Button>
 
-            <a
-              className="group relative inline-block text-sm font-medium text-gray-600 focus:ring-3 focus:outline-hidden"
+            <Button
               href="#"
+              variant="outlined"
+              sx={{
+                borderColor: "#777",
+                color: "#333",
+                "&:hover": {
+                  backgroundColor: "#ddd",
+                  color: "#111",
+                }
+              }}
             >
-              <span className="absolute inset-0 border border-current"></span>
-              <span
-                className="block border border-current bg-white px-12 py-3 transition-transform group-hover:-translate-x-1 group-hover:-translate-y-1"
-              >
-                Learn More
-              </span>
-            </a>
+              Learn More
+            </Button>
           </div>
         </div>
       </div>

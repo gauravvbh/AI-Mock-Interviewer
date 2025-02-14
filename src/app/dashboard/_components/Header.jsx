@@ -16,11 +16,11 @@ const Header = () => {
         <div className="flex h-16 items-center justify-between">
           {/* Logo */}
           <div className="md:flex md:items-center md:gap-12">
-            <a className="block text-teal-600" href="#">
+            <a className="block text-teal-600" href="/">
               <span className="sr-only">Home</span>
               <Image
                 className='cursor-pointer mt-[-20px] ml-6 md:ml-20 lg:ml-6'
-                onClick={() => router.push('/')}
+                // onClick={() => router.push('/')}
                 src={'/interviewer.svg'}
                 width={160}
                 height={100}

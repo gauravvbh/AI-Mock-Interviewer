@@ -5,6 +5,7 @@ import { dark } from '@clerk/themes';
 import { Toaster } from "react-hot-toast";
 import Header from "./dashboard/_components/Header";
 import NextTopLoader from "nextjs-toploader";
+import LayoutWrapper from "./_components/LayoutWrapper";
 
 
 const geistSans = Geist({
@@ -31,10 +32,10 @@ export default function RootLayout({ children }) {
         >
           <NextTopLoader />
           <Toaster position="bottom-center" />
-          <Header />
-          <div className="mx-5 md:mx-20 lg:mx-36">
+          <LayoutWrapper children={children} />
+          {/* <div className="mx-5 md:mx-20 lg:mx-36">
             {children}
-          </div>
+          </div> */}
         </body>
       </html>
     </ClerkProvider>

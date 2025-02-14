@@ -194,13 +194,32 @@ function AddNewInterview() {
                         </div>
 
                         <DialogActions>
-                            <Button disabled={loading} sx={{ backgroundColor: '#9dabb1', color: 'white' }} onClick={handleClose}>
+                            <Button
+                                disabled={loading}
+                                sx={{
+                                    // borderColor: "#888", // Grey border
+                                    // color: "#222", // Light grey text
+                                    backgroundColor: "#ddd",
+                                    color: "#111",
+                                    // "&:hover": {
+                                    //     backgroundColor: "white",
+                                    //     color: "#ddd",
+                                    // },
+                                }}
+                                onClick={handleClose}
+                            >
                                 Cancel
                             </Button>
                             <Button
                                 disabled={loading}
                                 type="submit"
-                                sx={{ backgroundColor: '#35baf6', color: 'white' }}
+                                sx={{
+                                    backgroundColor: "#222", // Dark grey
+                                    color: "white",
+                                    "&:hover": {
+                                        backgroundColor: "#444",
+                                    },
+                                }}
                                 autoFocus
                             >
                                 {loading ? (
