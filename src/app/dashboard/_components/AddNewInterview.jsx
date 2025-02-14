@@ -224,8 +224,8 @@ function AddNewInterview() {
                             >
                                 {loading ? (
                                     <div className="flex items-center">
-                                        <LoaderCircle className='animate-spin' size={16} />
-                                        <span className="ml-2">Generating from AI</span>
+                                        <LoaderCircle className='text-white animate-spin' size={16} />
+                                        <span className="ml-2 text-white">Generating from AI</span>
                                     </div>
                                 ) : (
                                     "Start Interview"
