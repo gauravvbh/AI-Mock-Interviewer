@@ -1,36 +1,118 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# 🏆 Mock Interview AI - Ace Your Software Interviews
 
-## Getting Started
+![Mock Interview AI](assets/mock-interview-banner.png)
 
-First, run the development server:
+🚀 **Mock Interview AI** is an advanced AI-driven platform designed to **help candidates prepare for real-world software interviews** through interactive, voice-based mock interviews. Get real-time feedback, master technical and behavioral questions, and boost your confidence to land your dream job.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+The app will be available at [Live Link](https://ai-mock-interviewer-eta.vercel.app) 🎉.
+
+---
+
+## 📖 Table of Contents
+
+- [🌟 Features](#-features)
+- [📸 Screenshots](#-screenshots)
+- [🛠 Installation](#-installation)
+- [🚀 Usage](#-usage)
+- [🛒 Subscription Plans](#-subscription-plans)
+
+---
+
+## 🌟 Features
+
+✅ **AI-Powered Interviews** – Simulate real interviews with AI-driven responses.  
+✅ **Real-Time Feedback** – Get instant feedback on answers & improvements.  
+✅ **Voice-to-Voice Interaction** – AI converses just like a real interviewer.  
+✅ **Multiple Difficulty Levels** – Beginner, Intermediate, and Expert interview modes.  
+✅ **Role-Based Questions** – Choose Software Engineer, Data Scientist, PM, and more.  
+✅ **Dark & Light Themes** – Customize the UI to match your preference.  
+✅ **Payment Integration** – Upgrade to premium plans via Razorpay.  
+✅ **Secure Authentication** – Powered by Clerk for login & user management.
+
+---
+
+## 📸 Screenshots
+
+🔹 **Home Page**  
+![Home Page](assets/home-page.png)
+
+🔹 **Interview Page**  
+![Interview Page](assets/interview-page.png)
+
+🔹 **Subscription Plans**  
+![Plans](assets/plans.png)
+
+🔹 **Live AI Interview**  
+![Live Interview](assets/live-interview.png)
+
+---
+
+## 🛠 Installation
+
+Follow these steps to **set up the project locally**:
+
+### 1️⃣ **Clone the repository**
+
+```sh
+git clone https://github.com/your-username/mock-interview-ai.git
+cd mock-interview-AI
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 2️⃣ **Install dependencies**
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+```sh
+npm install
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### **3️⃣ Set up environment variables**
 
-## Learn More
+Create a **.env.local** file and add the following:
 
-To learn more about Next.js, take a look at the following resources:
+```env
+NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=your_clerk_publishable_key
+CLERK_SECRET_KEY=your_clerk_secret_key
+NEXT_PUBLIC_RAZORPAY_KEY_ID=your_razorpay_key
+DATABASE_URL=your_database_url
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### **4️⃣ Run the development server**
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```sh
+npm run dev
+```
 
-## Deploy on Vercel
+## 🚀**Usage**
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### 1️⃣ Sign Up & Log In
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Register using Clerk authentication (Google, GitHub, or Email).
+- Your data is securely stored in the database.
+
+### 2️⃣ Start a Mock Interview
+
+- Choose job role (Software Engineer, Data Scientist, etc.).
+- Select difficulty level (Easy, Medium, Hard).
+- Start an AI-driven voice interview.
+
+### 3️⃣ Upgrade to a Paid Plan
+
+- Free Plan: Basic interview questions.
+- Monthly Plan: Advanced AI features & analytics.
+- Yearly Plan: Unlimited interviews & premium feedback.
+
+### 4️⃣ Track Performance
+
+- View detailed feedback on answers.
+- Improve based on AI suggestions.
+
+## **🛒 Subscription Plans**
+
+We offer three subscription tiers:
+
+| Plan    | Price (per month) | Features                                                                                                                                                                   |
+| ------- | ----------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Free    | ₹0                | Create 3 Mock Interviews, Unlimited Retake Interview                                                                                                                       |
+| Monthly | ₹100              | Create 3 Mock Interviews, Unlimited Retake Interview, Practice Questions, Email Support                                                                                    |
+| Yearly  | 700               | Unlimited Mock Interviews, Unlimited, Retake Interview, Practice Questions, Email Support, One o One, Mentor Support, Resume Analyzer and Builder, Resume based interviews |
+
+Payments are securely handled using **Razorpay**.
