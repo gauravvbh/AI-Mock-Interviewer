@@ -54,8 +54,8 @@ Follow these steps to **set up the project locally**:
 ### 1️⃣ **Clone the repository**
 
 ```sh
-git clone https://github.com/your-username/mock-interview-ai.git
-cd mock-interview-AI
+git clone https://github.com/gauravvbh/AI-Mock-Interviewer.git
+cd AI-Mock-Interviewer
 ```
 
 ### 2️⃣ **Install dependencies**
@@ -71,8 +71,14 @@ Create a **.env.local** file and add the following:
 ```env
 NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=your_clerk_publishable_key
 CLERK_SECRET_KEY=your_clerk_secret_key
-NEXT_PUBLIC_RAZORPAY_KEY_ID=your_razorpay_key
-DATABASE_URL=your_database_url
+NEXT_PUBLIC_CLERK_SIGN_IN_URL=sign_in_url
+NEXT_PUBLIC_CLERK_SIGN_UP_URL=sign_up_url
+NEXT_PUBLIC_RAZORPAY_KEY_ID=your_razorpay_key_id
+NEXT_PUBLIC_RAZORPAY_KEY_SECRET=your_razorpay_key_secret
+NEXT_PUBLIC_DATABASE_URL=your_database_url
+NEXT_PUBLIC_GEMINI_API_KEY=your_gemini_api_key
+NEXT_PUBLIC_INTERVIEW_QUESTIONS_COUNT=total_number_of_interview_questions
+NEXT_PUBLIC_INFORMATION=general_info
 ```
 
 ### **4️⃣ Run the development server**
