@@ -36,7 +36,7 @@ const RecordAnswerSection = ({ mockInterviewQuestions, activeQuestionIndex, inte
     }, [results]);
 
     useEffect(() => {
-        if (!isRecording && userAnswer.length > 10) {
+        if (!isRecording) {
             saveToDB();
         }
     }, [isRecording]);
@@ -129,7 +129,15 @@ const RecordAnswerSection = ({ mockInterviewQuestions, activeQuestionIndex, inte
                     </h2>
                 ) : (
                     <h2 className="flex gap-2 items-center">
-                        <Mic /> Start Recording
+                        {
+                            loading ? (
+                                <p className="flex gap-2 items-center">Wait!! Response is saving</p>
+                            ) : (
+                                <>
+                                    <Mic /> Start Recording
+                                </>
+                            )
+                        }
                     </h2>
                 )}
             </Button>
