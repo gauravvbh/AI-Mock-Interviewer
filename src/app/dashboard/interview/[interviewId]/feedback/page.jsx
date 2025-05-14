@@ -4,7 +4,7 @@ import { eq } from 'drizzle-orm';
 import { useParams, useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 import { db } from 'utils/db';
-import { UserAnswer } from 'utils/schema';
+import { MockInterview, UserAnswer } from 'utils/schema';
 import { Collapsible } from "radix-ui";
 import { ChevronsUpDown } from 'lucide-react';
 import { Button } from '@mui/material';
@@ -13,15 +13,45 @@ const Feedback = () => {
     const params = useParams();
     const router = useRouter();
     const [feedbackList, setFeedbackList] = useState([]);
+    const [notAnswered, setNotAnswered] = useState([]);
+    const [overallRating, setOverallRating] = useState(0);
 
     const getFeedback = async () => {
-        const result = await db.select()
+        const answered = await db.select()
             .from(UserAnswer)
             .where(eq(UserAnswer.mockIdRef, params.interviewId))
             .orderBy(UserAnswer.id);
 
-        setFeedbackList(result);
-        console.log(result);
+        const result2 = await db.select()
+            .from(MockInterview)
+            .where(eq(MockInterview.mockId, params.interviewId))
+
+
+        const answeredQuestions = answered.map(ans => ans.question.trim());
+        const allQuestions = result2[0].aiMockResponses ? JSON.parse(result2[0].aiMockResponses) : [];
+
+
+        const unanswered = allQuestions.filter(q => {
+            if (!q.question) {
+                console.log("Invalid question:", q); // Debugging
+            }
+            return q.question && !answeredQuestions.includes(q.question.trim());
+        });
+
+
+        setFeedbackList(answered);
+        setNotAnswered(unanswered);
+        // console.log(result);
+
+        const totalRating = answered.reduce((acc, item) => {
+            // Extract numerical rating (e.g., '1/5' -> 1)
+            const rating = parseInt(item.rating.split('/')[0], 10);
+            return acc + rating;
+        }, 0);
+
+        const averageRating = answered.length > 0 ? totalRating / answered.length : 0;
+        setOverallRating(averageRating);
+
     };
 
     useEffect(() => {
@@ -37,7 +67,7 @@ const Feedback = () => {
                     <h2 className="text-3xl font-bold text-green-600">🎉 Congratulations!</h2>
                     <h2 className="font-bold text-2xl">Here is your interview feedback</h2>
                     <h2 className="text-lg text-gray-700 my-3">
-                        Your overall interview rating: <strong className="text-gray-900">7/10</strong>
+                        Your overall interview rating: <strong className="text-gray-900">{overallRating.toFixed(1)}/5</strong>
                     </h2>
                     <h2 className="text-sm text-gray-600">
                         Below are your interview questions with correct answers, your answers, and feedback for improvement.
@@ -73,6 +103,23 @@ const Feedback = () => {
                             </Collapsible.Root>
                         ))}
                     </div>
+
+                    {notAnswered.length > 0 && (
+                        <>
+                            <h2 className="mt-10 text-xl font-semibold text-red-600">
+                                ⚠️ Unanswered Questions
+                            </h2>
+                            <div className="mt-4 space-y-4">
+                                {notAnswered.map((item, index) => (
+                                    <div key={index} className="p-4 bg-yellow-50 border border-yellow-300 rounded-lg">
+                                        <h3 className="text-gray-800 font-medium">Question: {item.question}</h3>
+                                        <p className="text-sm text-gray-500">This question was not answered.</p>
+                                    </div>
+                                ))}
+                            </div>
+                        </>
+                    )}
+
                 </>
             )}
 

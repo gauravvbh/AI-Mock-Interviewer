@@ -11,9 +11,11 @@ import chatSession from 'utils/AIModal';
 import { db } from 'utils/db';
 import { UserAnswer } from 'utils/schema';
 
+
 const RecordAnswerSection = ({ mockInterviewQuestions, activeQuestionIndex, interviewData }) => {
     const [userAnswer, setUserAnswer] = useState('');
     const [loading, setLoading] = useState(false);
+    const [manuallyStopped, setManuallyStopped] = useState(false);
     const { user } = useUser();
 
     const {
@@ -29,6 +31,10 @@ const RecordAnswerSection = ({ mockInterviewQuestions, activeQuestionIndex, inte
         useLegacyResults: false,
     });
 
+    if (error) {
+        console.error('Speech to text error:', error);
+    }
+
     useEffect(() => {
         if (results.length > 0) {
             setUserAnswer(prevAns => prevAns + " " + results.map(result => result.transcript).join(" "));
@@ -36,15 +42,26 @@ const RecordAnswerSection = ({ mockInterviewQuestions, activeQuestionIndex, inte
     }, [results]);
 
     useEffect(() => {
-        if (!isRecording) {
+        if (!isRecording && manuallyStopped && userAnswer && results.length > 0) {
+            console.log('User stopped recording. Saving to DB...');
             saveToDB();
         }
-    }, [isRecording]);
+    }, [isRecording, manuallyStopped, userAnswer, results]);
+
+    
+    useEffect(() => {
+        if (!isRecording && !manuallyStopped && userAnswer && !loading) {
+            console.warn('Recording stopped unexpectedly. Restarting...');
+            startSpeechToText();
+        }
+    }, [isRecording, manuallyStopped]);
 
     const startStopRecording = () => {
         if (isRecording) {
             stopSpeechToText();
+            setManuallyStopped(true);
         } else {
+            setManuallyStopped(false);
             startSpeechToText();
         }
     };
@@ -52,9 +69,11 @@ const RecordAnswerSection = ({ mockInterviewQuestions, activeQuestionIndex, inte
     const saveToDB = async () => {
         try {
             setLoading(true);
+
             const feedbackPrompt =
                 "Interview Question: " + mockInterviewQuestions[activeQuestionIndex]?.question +
-                ", User Answer: " + userAnswer + ", depends on answer for the given interview question, please provide rating for answer and feedback as area of improvement if any in just 3 to 5 lines to improve it in JSON format with rating field and feedback field";
+                ", User Answer: " + userAnswer +
+                ", depends on answer for the given interview question, please provide rating for answer and feedback as area of improvement if any in just 3 to 5 lines to improve it in JSON format with rating field and feedback field";
 
             const result = await chatSession.sendMessage(feedbackPrompt);
             const mockJSONResponse = result.response.text().replace('```json', '').replace('```', '');
@@ -129,15 +148,13 @@ const RecordAnswerSection = ({ mockInterviewQuestions, activeQuestionIndex, inte
                     </h2>
                 ) : (
                     <h2 className="flex gap-2 items-center">
-                        {
-                            loading ? (
-                                <p className="flex gap-2 items-center">Wait!! Response is saving</p>
-                            ) : (
-                                <>
-                                    <Mic /> Start Recording
-                                </>
-                            )
-                        }
+                        {loading ? (
+                            <p className="flex gap-2 items-center">Wait!! Response is saving</p>
+                        ) : (
+                            <>
+                                <Mic /> Start Recording
+                            </>
+                        )}
                     </h2>
                 )}
             </Button>
