@@ -14,7 +14,8 @@ import toast from 'react-hot-toast'
 
 const UpgradePage = () => {
     const { user } = useUser();
-    const [currentPlan, setCurrentPlan] = useState('Free');
+    const [currentPlan, setCurrentPlan] = useState('');
+    const [loading, setLoading] = useState(true)
 
     useEffect(() => {
         if (user) {
@@ -93,7 +94,8 @@ const UpgradePage = () => {
             console.error("Error creating order:", error);
         }
     };
-
+    console.log('currentPlan')
+    console.log(currentPlan)
     return (
         <>
             <PagesTopLoader />
@@ -127,7 +129,11 @@ const UpgradePage = () => {
                                             ? "border-gray-400 bg-gray-300 text-gray-600 cursor-not-allowed"
                                             : "border border-black bg-black text-white hover:bg-gray-800"}`}
                                 >
-                                    {currentPlan === plan.name ? "In Use" : "Upgrade Plan"}
+                                    {
+                                        currentPlan ? (<>
+                                            {currentPlan === plan.name ? "In Use" : "Upgrade Plan"}
+                                        </>) : ('Loading')
+                                    }
                                 </Button>
                             </div>
 
