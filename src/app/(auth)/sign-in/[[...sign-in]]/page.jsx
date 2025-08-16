@@ -15,15 +15,16 @@ export default function LoginPage() {
                 />
 
                 {/* Logo on top */}
-                <div className="absolute lg:left-6 z-20 bg-white">
+                <div className="absolute lg:left-6 left-4 z-20 h-16 md:h-24 lg:h-auto bg-white p-1">
                     <Image
                         src={'/interviewer.svg'}
                         width={150}
                         height={150}
                         alt='logo'
-                        className="cursor-pointer"
+                        className="cursor-pointer w-20 sm:w-28 lg:w-40  lg:mt-0 h-auto"
                     />
                 </div>
+
 
                 <div className="absolute inset-0 flex flex-col justify-end p-8 lg:p-16">
                     <h1 className="text-3xl lg:text-5xl font-bold text-white mb-2">
@@ -37,7 +38,7 @@ export default function LoginPage() {
 
             {/* Right side - Sign-in form */}
             <div className="flex-1 flex items-center justify-center px-8 py-12 lg:px-16 lg:py-24 bg-[#8B8784]">
-                <SignIn/>
+                <SignIn />
             </div>
         </div>
     )
