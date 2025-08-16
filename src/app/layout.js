@@ -1,7 +1,7 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { ClerkProvider } from "@clerk/nextjs";
-import { dark } from '@clerk/themes';
+import { light } from '@clerk/themes';
 import { Toaster } from "react-hot-toast";
 import Header from "./dashboard/_components/Header";
 import NextTopLoader from "nextjs-toploader";
@@ -27,7 +27,22 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <ClerkProvider appearance={{ baseTheme: dark }} publishableKey={clerkPublishableKey}>
+    <ClerkProvider
+      appearance={{
+        baseTheme: light,
+        variables: {
+          colorPrimary: "#8B8784",
+          colorText: "#000000",
+          colorTextSecondary: "#000000",
+          colorBackground: "#FFFFFF",
+          colorDanger: "#FF0000",
+        },
+        elements: {
+          formButtonPrimary: "h-10 rounded-md font-semibold",
+        },
+      }}  
+      publishableKey={clerkPublishableKey}
+    >
       <html lang="en">
         <body
           className={`${geistSans.variable} ${geistMono.variable} antialiased`}
