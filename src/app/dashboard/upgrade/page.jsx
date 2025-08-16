@@ -15,7 +15,7 @@ import toast from 'react-hot-toast'
 const UpgradePage = () => {
     const { user } = useUser();
     const [currentPlan, setCurrentPlan] = useState('');
-    const [loading, setLoading] = useState(true)
+    const [loading, setLoading] = useState(false)
 
     useEffect(() => {
         if (user) {
@@ -24,6 +24,7 @@ const UpgradePage = () => {
     }, [user]);
 
     const getCurrentPlan = async () => {
+        setLoading(true);
         const storedPlan = localStorage.getItem("userPlan");
         if (storedPlan) {
             setCurrentPlan(storedPlan);
@@ -40,6 +41,8 @@ const UpgradePage = () => {
             }
         } catch (error) {
             console.error("Error getting current plan:", error);
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -49,7 +52,7 @@ const UpgradePage = () => {
             return;
         }
         const newPlan = amount === 100 ? "Monthly" : "Yearly";
-
+        setLoading(true);
         try {
             const res = await axios.post('/api/createOrder', { amount });
 
@@ -92,6 +95,8 @@ const UpgradePage = () => {
             payment.open();
         } catch (error) {
             console.error("Error creating order:", error);
+        } finally {
+            setLoading(false);
         }
     };
     console.log('currentPlan')
@@ -130,9 +135,9 @@ const UpgradePage = () => {
                                             : "border border-black bg-black text-white hover:bg-gray-800"}`}
                                 >
                                     {
-                                        currentPlan ? (<>
+                                        currentPlan || loading ? (<>
                                             {currentPlan === plan.name ? "In Use" : "Upgrade Plan"}
-                                        </>) : ('Loading')
+                                        </>) : ('Loading...')
                                     }
                                 </Button>
                             </div>
