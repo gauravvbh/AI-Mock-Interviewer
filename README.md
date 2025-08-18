@@ -69,10 +69,16 @@ npm install
 Create a **.env.local** file and add the following:
 
 ```env
-NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=your_clerk_publishable_key
-CLERK_SECRET_KEY=your_clerk_secret_key
-NEXT_PUBLIC_RAZORPAY_KEY_ID=your_razorpay_key
-DATABASE_URL=your_database_url
+NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=
+CLERK_SECRET_KEY=
+NEXT_PUBLIC_CLERK_SIGN_IN_URL=/sign-in
+NEXT_PUBLIC_CLERK_SIGN_UP_URL=/sign-up
+NEXT_PUBLIC_DATABASE_URL=
+NEXT_PUBLIC_GEMINI_API_KEY=
+NEXT_PUBLIC_INTERVIEW_QUESTIONS_COUNT=5
+NEXT_PUBLIC_INFORMATION='Enable Video Web Cam and Microphone to Start your AI Generated Mock Interview. It has 5 quetions which you can answer and at the last you will get the report on the basis of your answers. NOTE: We never record your video, Webcam or Microphone access you can disable at any time if you want.'
+NEXT_PUBLIC_RAZORPAY_KEY_ID=
+RAZORPAY_KEY_SECRET=
 ```
 
 ### **4️⃣ Run the development server**
