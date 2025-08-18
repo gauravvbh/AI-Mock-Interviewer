@@ -4,7 +4,7 @@
 
 🚀 **Mock Interview AI** is an advanced AI-driven platform designed to **help candidates prepare for real-world software interviews** through interactive, voice-based mock interviews. Get real-time feedback, master technical and behavioral questions, and boost your confidence to land your dream job.
 
-The app will be available at [Live Link](https://ai-mock-interviewer-eta.vercel.app) 🎉.
+The app will be available at [Live Link](https://ai-mock-interviewer-gauravvbh.vercel.app/) 🎉.
 
 ---
 
