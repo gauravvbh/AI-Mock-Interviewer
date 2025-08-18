@@ -55,7 +55,7 @@ Follow these steps to **set up the project locally**:
 
 ```sh
 git clone https://github.com/gauravvbh/AI-Mock-Interviewer.git
-cd mock-interview-AI
+cd AI-Mock-Interviewer
 ```
 
 ### 2️⃣ **Install dependencies**
